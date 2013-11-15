@@ -22,9 +22,6 @@ public class StaticContentComponent extends DefaultComponent {
          throw new IllegalArgumentException("Resource path must be specified.");
       }
 
-      System.out.println("------------- path = " + path);
-
-
       Endpoint endpoint = new StaticContentEndpoint(uri, this);
       setProperties(endpoint, parameters);
       return endpoint;

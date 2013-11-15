@@ -34,15 +34,10 @@ public class StaticContentProducer extends DefaultProducer {
       }
 
       String pathStr = endpoint.getPath() + "/" + relativepath;
-
-      System.out.println("---- - pathStr = " + pathStr);
       Path path = FileSystems.getDefault().getPath(pathStr);
-
-      //String mimeType = Files.probeContentType(path);
 
       MimetypesFileTypeMap map = new MimetypesFileTypeMap();
 
-      System.out.println("----=== " + map.getContentType(pathStr));
       String mimeType = map.getContentType(pathStr);
 
       Message msg = getMessageForResponse(exchange);
