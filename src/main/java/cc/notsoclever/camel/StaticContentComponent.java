@@ -10,24 +10,15 @@ import java.util.Map;
  */
 public class StaticContentComponent extends DefaultComponent {
 
-   private String path;
-   private String defaultFile;
-
    protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
+      StaticContentEndpoint endpoint = new StaticContentEndpoint(uri, this);
+      setProperties(endpoint, parameters);
 
-      defaultFile = getAndRemoveParameter(parameters, "defaultFile", String.class);
-
-      path = remaining;
+      String path = remaining;
       if (path == null) {
          throw new IllegalArgumentException("Resource path must be specified.");
       }
-
-      Endpoint endpoint = new StaticContentEndpoint(uri, this);
-      setProperties(endpoint, parameters);
+      endpoint.setRootDir(path);
       return endpoint;
-   }
-
-   public String getPath() {
-      return path;
    }
 }

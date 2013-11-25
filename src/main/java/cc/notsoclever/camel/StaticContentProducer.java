@@ -27,13 +27,13 @@ public class StaticContentProducer extends DefaultProducer {
    public void process(Exchange exchange) throws Exception {
       Message in = exchange.getIn();
 
-      String relativepath = in.getHeader(Exchange.HTTP_PATH, String.class);
+      String relativePath = in.getHeader(Exchange.HTTP_PATH, String.class);
 
-      if (relativepath.isEmpty()) {
-         relativepath = "index.html";
+      if (relativePath.isEmpty()) {
+         relativePath = endpoint.getDefaultFile();
       }
 
-      String pathStr = endpoint.getPath() + "/" + relativepath;
+      String pathStr = endpoint.getRootDir() + "/" + relativePath;
       Path path = FileSystems.getDefault().getPath(pathStr);
 
       MimetypesFileTypeMap map = new MimetypesFileTypeMap();
@@ -46,6 +46,7 @@ public class StaticContentProducer extends DefaultProducer {
          msg.setBody(Files.readAllBytes(path));
          msg.setHeader(Exchange.CONTENT_TYPE, mimeType);
          msg.setHeader(Exchange.HTTP_RESPONSE_CODE, "200");
+         LOG.info("GET - " + mimeType + " - " + pathStr);
       } catch (IOException e) {
          msg.setBody(pathStr + " not found.");
          msg.setHeader(Exchange.HTTP_RESPONSE_CODE, "404");

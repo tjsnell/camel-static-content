@@ -10,16 +10,14 @@ import org.apache.camel.impl.DefaultEndpoint;
  * Represents a static endpoint.
  */
 public class StaticContentEndpoint extends DefaultEndpoint {
+   private String defaultFile = "index.html";
+   private String rootDir;
 
     public StaticContentEndpoint() {
     }
 
     public StaticContentEndpoint(String uri, StaticContentComponent component) {
         super(uri, component);
-    }
-
-    public StaticContentEndpoint(String endpointUri) {
-        super(endpointUri);
     }
 
     public Producer createProducer() throws Exception {
@@ -34,8 +32,19 @@ public class StaticContentEndpoint extends DefaultEndpoint {
         return true;
     }
 
-   public String getPath() {
-      StaticContentComponent comp = (StaticContentComponent) getComponent();
-      return comp.getPath();
+   public String getDefaultFile() {
+      return defaultFile;
+   }
+
+   public void setDefaultFile(String defaultFile) {
+      this.defaultFile = defaultFile;
+   }
+
+   public String getRootDir() {
+      return rootDir;
+   }
+
+   public void setRootDir(String rootDir) {
+      this.rootDir = rootDir;
    }
 }

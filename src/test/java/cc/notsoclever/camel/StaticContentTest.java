@@ -50,6 +50,11 @@ public class StaticContentTest extends CamelTestSupport {
       checkMimeType("menu.json", "application/json");
    }
 
+   @Test
+   public void testDefaultFile() throws Exception {
+
+   }
+
    private void checkMimeType(final String fileName, String mimeType) throws Exception {
       Exchange exchange = sendExchange(fileName);
 
@@ -70,7 +75,7 @@ public class StaticContentTest extends CamelTestSupport {
 
    @Override
    protected RouteBuilder createRouteBuilder() throws Exception {
-      final String basePath = System.getProperty("user.dir") + "/src/test/static";
+      final String basePath = System.getProperty("user.dir") + "/src/test/static?defaultFile=bogus.rtf";
       return new RouteBuilder() {
          public void configure() {
             from("direct:start")
